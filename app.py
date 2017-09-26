@@ -8,3 +8,7 @@ def landing_page():
     return render_template(
         'landing_page.html', name='landingpage-template'
     )
+
+@app.route("/register")
+def register():
+    return render_template('register.html', name='registration')
