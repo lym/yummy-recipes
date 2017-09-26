@@ -17,6 +17,7 @@ flask-api==0.7.1
 flask-login==0.4.0
 flask==0.12.2
 greenlet==0.4.12          # via bpython
+gunicorn==19.7.1
 idna==2.5                 # via requests
 itsdangerous==0.24        # via flask
 jinja2==2.9.6             # via flask
