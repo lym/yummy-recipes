@@ -1,1 +1,6 @@
-script: PYTHON_PATH=. pytest -r Pf --cov=.
+language: python
+  python:
+    - 3.6
+    - nightly
+  script:
+    - PYTHON_PATH=. pytest -r Pf --cov=.
