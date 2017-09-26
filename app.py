@@ -12,3 +12,7 @@ def landing_page():
 @app.route("/register")
 def register():
     return render_template('register.html', name='registration')
+
+@app.route("/login")
+def login():
+    return render_template('login.html', name='login')
