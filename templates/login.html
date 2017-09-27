@@ -21,7 +21,7 @@
 
     <div class="row">
       <div class="col">
-        <form action="" method="post">
+        <form action="/returning/" method="post">
           <div class="form-group has-feedback">
             <input type="email" class="form-control" name="email"
                    placeholder="Email">
@@ -43,7 +43,7 @@
             </div> <!-- /.col -->
           </div>
         </form>
-        <a href="#">Register New Account</a><br>
+        <a href="{{ url_for('register') }}">Register New Account</a><br>
       </div>
 
       <div class="col">
