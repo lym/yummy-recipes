@@ -9,6 +9,7 @@ from flask import render_template
 from controllers import (
         LoginController,
         UsersController,
+        RecipesController,
 )
 
 app = Flask(__name__)
@@ -36,6 +37,9 @@ def logout():
 def dashboard():
     return render_template('dashboard.html', name='dashboard')
 
+@app.route("/new_recipe")
+def new_recipe():
+    return render_template('recipes/new.html', name="new_recipe")
 
 app.add_url_rule('/returning/', view_func=LoginController.as_view('returning'))
 
@@ -43,5 +47,7 @@ app.add_url_rule(
     '/users/',
     view_func=UsersController.as_view('user-registration')
 )
+
+app.add_url_rule('/recipes/', view_func=RecipesController.as_view('recipes'))
 
 app.secret_key = 'K5A34_zr=sdfjgq29kd'
