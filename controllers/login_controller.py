@@ -2,6 +2,7 @@ from flask import (
     abort,
     redirect,
     request,
+    session,
     url_for
 )
 from flask.views import MethodView
@@ -14,7 +15,8 @@ class LoginController(MethodView):
         email = request.form.get('email')
         passw = request.form.get('password')
         if User.valid_user(email, passw):
-            res = {'email': email, 'status': 'OK'}
+            # res = {'email': email, 'status': 'OK'}
+            session['email'] = email
             return redirect(url_for('dashboard'))
 
         print('Email: {}\nPass: {}'.format(email, passw))

@@ -34,3 +34,4 @@ app.add_url_rule(
     view_func=UsersController.as_view('user-registration')
 )
 
+app.secret_key = 'K5A34_zr=sdfjgq29kd'
