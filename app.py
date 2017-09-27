@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import render_template
 
+from controllers import UsersController
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -16,3 +18,10 @@ def register():
 @app.route("/login")
 def login():
     return render_template('login.html', name='login')
+
+
+app.add_url_rule(
+    '/users/',
+    view_func=UsersController.as_view('user-registration')
+)
+
