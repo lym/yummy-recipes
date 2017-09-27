@@ -1,4 +1,9 @@
-from flask import Flask
+from flask import (
+    Flask,
+    redirect,
+    session,
+    url_for,
+)
 from flask import render_template
 
 from controllers import (
@@ -21,6 +26,11 @@ def register():
 @app.route("/login")
 def login():
     return render_template('login.html', name='login')
+
+@app.route("/logout")
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('landing_page'))
 
 @app.route("/dashboard")
 def dashboard():
