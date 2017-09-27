@@ -1,7 +1,9 @@
 from flask import (
     abort,
+    redirect,
     request,
     render_template,
+    url_for,
 )
 from flask.views import MethodView
 from flask_api import status
@@ -33,6 +35,4 @@ class UsersController(MethodView):
         )
         print(request.form)
         res = status.HTTP_201_CREATED
-        return render_template(
-            'login.html', name='login'
-        )
+        return redirect(url_for('login'))
