@@ -3,8 +3,7 @@
 An application that lets users keep track of their favorite recipes.
 Users are also able to share recipes with their friends.
 
-[Build
-Status](https://travis-ci.org/lym/yummy-recipes.svg?branch=master)
+[![Build Status](https://travis-ci.org/lym/yummy-recipes.svg?branch=master)](https://travis-ci.org/lym/yummy-recipes)
 
 #  Running the the app
 - Clone this repo
