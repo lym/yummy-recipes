@@ -31,20 +31,14 @@
 
       <div class="col">
         <section class="tags">
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
-          <li>First Recipe</li>
+          {% if recipes|length is equalto 0 %}
+            <h3><small class="text-muted">It appears you haven't yet created any recipes</small></h3>
+          {% else %}
+            {% for recipe in recipes %}
+              <h3><small class="text-muted">{{ recipe.get('data').get('title') }} </small></h3>
+              <p>{{ recipe.get('data').get('description') }}</p>
+            {% endfor %}
+          {% endif %}
         </section>
       </div>
 

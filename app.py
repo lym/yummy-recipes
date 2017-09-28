@@ -6,6 +6,8 @@ from flask import (
 )
 from flask import render_template
 
+from models import Recipe
+
 from controllers import (
         LoginController,
         UsersController,
@@ -35,7 +37,8 @@ def logout():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template('dashboard.html', name='dashboard')
+    recipes =  Recipe.all()
+    return render_template('dashboard.html', name='dashboard', recipes=recipes)
 
 @app.route("/new_recipe")
 def new_recipe():
