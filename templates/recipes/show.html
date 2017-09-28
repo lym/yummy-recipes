@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Yummy Recipes | Dashboard</title>
+  <title>Yummy Recipes | New Recipe</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -19,36 +19,18 @@
 
     <div class="row">
       <div class="col">
-        <section class="main-content">
-        <a href="/new_recipe">New Recipe</a>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
-        </section>
+        <h3>{{ recipe.get('data').get('title')|title }}</h3>
+        <p>{{ recipe.get('data').get('description')|capitalize }}</p>
+        <button type="primary" class="btn btn-primary">Add Instructions</button>
       </div>
 
       <div class="col">
         <section class="tags">
-          {% if recipes|length is equalto 0 %}
-            <h3><small class="text-muted">It appears you haven't yet created any recipes</small></h3>
-          {% else %}
-            {% for recipe in recipes %}
-              <a href="{{ url_for('recipes') ~ recipe.get('id') }}">
-                <h3><small class="text-muted">{{ recipe.get('data').get('title') }} </small></h3>
-              </a>
-              <p>{{ recipe.get('data').get('description') }}</p>
-            {% endfor %}
-          {% endif %}
         </section>
       </div>
 
       <div class="col">
         <section class="user-details">
-          <h5>{{ session['email'] }}</h5>
-
-          <img src="../static/images/lym-160x160.jpg" class="rounded" alt="Responsive image">
         </section>
       </div>
     </div>

@@ -51,6 +51,23 @@ app.add_url_rule(
     view_func=UsersController.as_view('user-registration')
 )
 
-app.add_url_rule('/recipes/', view_func=RecipesController.as_view('recipes'))
+recipes_url = RecipesController.as_view('recipes')
+
+app.add_url_rule(
+    '/recipes/',
+    defaults={'recipe_id': None},
+    view_func=recipes_url,
+    methods=['GET',]
+)
+app.add_url_rule(
+    '/recipes/',
+    view_func=recipes_url,
+    methods=['POST',]
+)
+app.add_url_rule(
+    '/recipes/<int:recipe_id>',
+    view_func=recipes_url,
+    methods=['GET', 'PUT', 'DELETE']
+)
 
 app.secret_key = 'K5A34_zr=sdfjgq29kd'

@@ -8,6 +8,8 @@ from flask import (
 from flask.views import MethodView
 from flask_api import status
 
+from tinydb import where
+
 from models import (
     User,
     Recipe,
@@ -15,7 +17,21 @@ from models import (
 
 
 class RecipesController(MethodView):
-    """ Controller for the user resource """
+    """ Controller for the recipe resource """
+    def get(self, recipe_id):
+        if recipe_id is None:
+            recipes = Recipes.all()
+            print('No recipe Id is being supplied')
+            return 'We have content'
+        else:
+            table = Recipe.db.table('recipes')
+            recipe = table.get(where('id') == recipe_id)
+            if recipe is None:
+                abort(404)
+            else:
+                print(recipe)
+                return render_template('recipes/show.html', recipe=recipe)
+
     def post(self):
         user_id = request.form.get('user_id')
         title = request.form.get('title')
