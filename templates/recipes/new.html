@@ -1,74 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Yummy Recipes | New Recipe</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-</head>
-<body>
-  <div class="container-fluid">
-    <header>
-        <ul class="nav justify-content-end">
-          <li><a class="nav-link" href="javascript:void(0)">Settings</a></li>
-          <li><a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a></li>
-        </ul>
-    </header>
-
-    <h1><a href="/">Yummy Recipes | New Recipe</a></h1>
-
-    <div class="row">
-      <div class="col">
-          <form action="/recipes/" method="post">
-            <div class="form-group has-feedback">
-              <input type="text" class="form-control" name="title"
-                     placeholder="Title">
-              <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <input type="description" class="form-control" name="description" placeholder="Description">
-              <span class="glyphicon glyphicon-envelope form-control-feedback">
-              </span>
-            </div>
-            <div class="row">
-              <div class="col-xs-8">
-                <div class="checkbox icheck">
-                  <label>
-                    <input type="checkbox" name="fulfilled"> Prepared this recipe before?
-                  </label>
-                </div>
-              </div>
-              <!-- /.col -->
-
-              <input type="hidden" class="form-control" id="user_id" name='user_id'
-                     value="{{ user.get('id') }}">
-
-              <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">
-                  Create Recipe
-                </button>
-              </div> <!-- /.col -->
-            </div>
-          </form>
-      </div>
-
-      <div class="col">
-        <section class="tags">
-        </section>
-      </div>
-
-      <div class="col">
-        <section class="user-details">
-        </section>
-      </div>
+{% extends "base.html" %}
+{% block title %} Yummy Recipes | Dashboard {% endblock %}
+{% block content %}
+  <h1><a href="/">Yummy Recipes | New Recipe</a></h1>
+  <form action="/recipes/" method="post">
+    <div class="form-group has-feedback">
+      <input type="text" class="form-control" name="title"
+             placeholder="Title">
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
     </div>
+    <div class="form-group has-feedback">
+      <input type="description" class="form-control" name="description" placeholder="Description">
+      <span class="glyphicon glyphicon-envelope form-control-feedback">
+      </span>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
+        <div class="checkbox icheck">
+          <label>
+            <input type="checkbox" name="fulfilled"> Prepared this recipe before?
+          </label>
+        </div>
+      </div>
+      <!-- /.col -->
 
-    <footer>
-      Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
-      All rights reserved
-    </footer>
-  </div>
-</body>
-</html>
+      <input type="hidden" class="form-control" id="user_id" name='user_id'
+             value="{{ user.get('id') }}">
+
+      <div class="col-xs-4">
+        <button type="submit" class="btn btn-primary btn-block btn-flat">
+          Create Recipe
+        </button>
+      </div> <!-- /.col -->
+    </div>
+  </form>
+{% endblock %}
