@@ -1,31 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{% block title %}Yummy Recipes{% endblock %}</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/stylesheets/bootstrap.css') }}">
 </head>
 <body>
   <div class="container-fluid">
     <header>
-        <ul class="nav justify-content-end">
-          <li><a class="nav-link" href="javascript:void(0)">Settings</a></li>
-          <li><a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a></li>
-        </ul>
+      <ul class="nav justify-content-end">
+        <li><a class="nav-link" href="javascript:void(0)">Settings</a></li>
+        <li><a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a></li>
+      </ul>
     </header>
 
     <div class="row">
       <div class="col">
-        <section class="sidebar">
-        <a href="/new_recipe">New Recipe</a>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
-          <li>First Tag</li>
+        <section>
+          <nav class="bg-light sidebar">
+            <ul class="nav nav-pills flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="/new_recipe">New Recipe</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/recipes">All Recipes</a>
+              </li>
+            </ul>
+          </nav>
         </section>
       </div>
 
@@ -33,22 +38,22 @@
         <section class="page_content">
           {% block content %}
           {% endblock %}
+
+          <footer class="footer">
+            Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
+            All rights reserved
+          </footer>
         </section>
       </div>
 
       <div class="col">
         <section class="user-details">
+          <img src="../static/images/lym-160x160.jpg" alt="Current User's Thumbnail">
           <h5>{{ session['email'] }}</h5>
-
-          <img src="../static/images/lym-160x160.jpg" class="rounded" alt="Responsive image">
         </section>
       </div>
     </div>
 
-    <footer>
-      Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
-      All rights reserved
-    </footer>
   </div>
 </body>
 </html>
