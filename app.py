@@ -11,6 +11,7 @@ from models import Recipe
 
 from controllers import (
         LandingPageController,
+        DashboardController,
         LoginController,
         UsersController,
         RecipesController,
@@ -35,11 +36,6 @@ def logout():
         session.pop('email', None)
     return redirect(url_for('landing_page'))
 
-@app.route("/dashboard")
-def dashboard():
-    recipes =  Recipe.all()
-    return render_template('dashboard.html', name='dashboard', recipes=recipes)
-
 @app.route("/new_recipe")
 def new_recipe():
     return render_template(
@@ -58,6 +54,11 @@ def new_instruction():
     )
 
 app.add_url_rule('/', view_func=LandingPageController.as_view('landing_page'))
+
+app.add_url_rule(
+    '/dashboard',
+    view_func=DashboardController.as_view('dashboard')
+)
 
 app.add_url_rule('/returning/', view_func=LoginController.as_view('returning'))
 
