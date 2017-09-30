@@ -15,12 +15,16 @@ from models import (
     Recipe,
 )
 
+from controllers import BaseController
 
 class RecipesController(MethodView):
     """ Controller for the recipe resource """
     def get(self, recipe_id):
+        if not BaseController.logged_in():  # send guests to landing page
+            # abort(401)
+            return redirect(url_for('landing_page'))
         if recipe_id is None:
-            recipes = Recipes.all()
+            recipes = Recipe.all()
             print('No recipe Id is being supplied')
             return 'We have content'
         else:
