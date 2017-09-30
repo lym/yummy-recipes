@@ -21,7 +21,9 @@
       <div class="col">
         <h3>{{ recipe.get('data').get('title')|title }}</h3>
         <p>{{ recipe.get('data').get('description')|capitalize }}</p>
-        <button type="primary" class="btn btn-primary">Add Instructions</button>
+        <a href="{{ '/new_instruction' ~ '?recipe=' ~ recipe.get('id') }}">
+          Add Instructions
+        </a>
       </div>
 
       <div class="col">

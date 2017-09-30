@@ -1,6 +1,7 @@
 from flask import (
     Flask,
     redirect,
+    request,
     session,
     url_for,
 )
@@ -43,7 +44,20 @@ def dashboard():
 
 @app.route("/new_recipe")
 def new_recipe():
-    return render_template('recipes/new.html', name="new_recipe")
+    return render_template(
+        'recipes/new.html',
+        name="new_recipe",
+        user=session.get('user')
+    )
+
+@app.route("/new_instruction")
+def new_instruction():
+    return render_template(
+        'instructions/new.html',
+        name="new_instruction",
+        user=session.get('user'),
+        recipe_id=request.args.get('recipe')
+    )
 
 app.add_url_rule('/returning/', view_func=LoginController.as_view('returning'))
 
