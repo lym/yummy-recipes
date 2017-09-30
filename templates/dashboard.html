@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block page_content %}
+{% block title %} Yummy Recipes | Dashboard {% endblock %}
+{% block content %}
   {% if recipes|length is equalto 0 %}
     <h3><small class="text-muted">It appears you haven't yet created any recipes</small></h3>
   {% else %}
@@ -10,4 +11,4 @@
       <p>{{ recipe.get('data').get('description') }}</p>
     {% endfor %}
   {% endif %}
-  {% endblock %}
+{% endblock %}
