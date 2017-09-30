@@ -12,6 +12,7 @@ from controllers import (
         LoginController,
         UsersController,
         RecipesController,
+        InstructionsController,
 )
 
 app = Flask(__name__)
@@ -52,6 +53,7 @@ app.add_url_rule(
 )
 
 recipes_url = RecipesController.as_view('recipes')
+instructions_url = InstructionsController.as_view('instructions')
 
 app.add_url_rule(
     '/recipes/',
@@ -67,6 +69,23 @@ app.add_url_rule(
 app.add_url_rule(
     '/recipes/<int:recipe_id>',
     view_func=recipes_url,
+    methods=['GET', 'PUT', 'DELETE']
+)
+
+app.add_url_rule(
+    '/instructions/',
+    defaults={'instruction_id': None},
+    view_func=instructions_url,
+    methods=['GET',]
+)
+app.add_url_rule(
+    '/instructions/',
+    view_func=instructions_url,
+    methods=['POST',]
+)
+app.add_url_rule(
+    '/instructions/<int:instruction_id>',
+    view_func=instructions_url,
     methods=['GET', 'PUT', 'DELETE']
 )
 
