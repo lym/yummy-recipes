@@ -74,3 +74,11 @@ class User(BaseModel):
     def first(cls):
         """ Returns first user in users table """
         return cls.all()[0]
+
+    @classmethod
+    def find(cls, email):
+        """ Lookup users by email """
+        for user in cls.all():
+            if user.get('data').get('email') == email:
+                return user
+            return None
