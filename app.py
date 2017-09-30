@@ -10,6 +10,7 @@ from flask import render_template
 from models import Recipe
 
 from controllers import (
+        LandingPageController,
         LoginController,
         UsersController,
         RecipesController,
@@ -17,12 +18,6 @@ from controllers import (
 )
 
 app = Flask(__name__)
-
-@app.route("/")
-def landing_page():
-    return render_template(
-        'landing_page.html', name='landingpage-template'
-    )
 
 @app.route("/register")
 def register():
@@ -34,7 +29,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop('email', None)
+    if session.get('user'):
+        session.pop('user')
+    if session.get('email'):
+        session.pop('email', None)
     return redirect(url_for('landing_page'))
 
 @app.route("/dashboard")
@@ -58,6 +56,8 @@ def new_instruction():
         user=session.get('user'),
         recipe_id=request.args.get('recipe')
     )
+
+app.add_url_rule('/', view_func=LandingPageController.as_view('landing_page'))
 
 app.add_url_rule('/returning/', view_func=LoginController.as_view('returning'))
 
