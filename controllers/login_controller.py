@@ -16,7 +16,9 @@ class LoginController(MethodView):
         passw = request.form.get('password')
         if User.valid_user(email, passw):
             # res = {'email': email, 'status': 'OK'}
+            user = User.find(email)
             session['email'] = email
+            session['user'] = user
             return redirect(url_for('dashboard'))
 
         print('Email: {}\nPass: {}'.format(email, passw))
