@@ -39,3 +39,11 @@ class Instruction(BaseModel):
     def all(cls):
         table = cls.db.table('instructions')
         return table.all()
+
+    @classmethod
+    def find(cls, instruction_id):
+        """ Look up instructions by ID """
+        for instruction in cls.all():
+            if instruction.get('id') == instruction_id:
+                return instruction
+            return None
