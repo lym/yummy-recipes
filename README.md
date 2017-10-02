@@ -14,3 +14,10 @@ Users are also able to share recipes with their friends.
 
 # Running the tests
     $ PYTHON_PATH=. pytest -r Pf --cov=.
+
+## Coding Style Rules
+This project follows the following coding conventions:
+
+- [HTML and CSS](http://codeguide.co/)
+- [EcmaScript/JavaScript](https://github.com/airbnb/javascript)
+- [Python](https://www.python.org/dev/peps/pep-0008/)
