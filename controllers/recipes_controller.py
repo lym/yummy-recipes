@@ -21,20 +21,20 @@ class RecipesController(MethodView):
     """ Controller for the recipe resource """
     def get(self, recipe_id):
         if not BaseController.logged_in():  # send guests to landing page
-            # abort(401)
             return redirect(url_for('landing_page'))
-        if recipe_id is None:
+        if recipe_id is None:  # No specific id so return all
             recipes = Recipe.all()
-            print('No recipe Id is being supplied')
-            return 'We have content'
-        else:
+            return render_template('recipes/index.html', recipes=recipes)
+        else:  # Dealing with a particular recipe
             table = Recipe.db.table('recipes')
             recipe = table.get(where('id') == recipe_id)
-            if recipe is None:
+            if recipe is None:  # Invalid recipe_id requested
                 abort(404)
             else:
-                print(recipe)
-                return render_template('recipes/show.html', recipe=recipe)
+                return render_template(
+                    'recipes/show.html',
+                    recipe=recipe,
+                    )
 
     def post(self):
         user_id = request.form.get('user_id')
