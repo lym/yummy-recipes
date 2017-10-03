@@ -1,3 +1,7 @@
+body {
+  padding-top: 3.5rem;
+}
+
 /* User details section */
 .user-details {
   padding-left: 25px;
@@ -10,7 +14,7 @@
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 51px;
+  /* top: 51px; */
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -47,4 +51,5 @@
   padding: 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
+  font-size: x-small;
 }
