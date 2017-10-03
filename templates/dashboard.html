@@ -5,10 +5,19 @@
     <h3><small class="text-muted">It appears you haven't yet created any recipes</small></h3>
   {% else %}
     {% for recipe in recipes %}
-      <a href="{{ url_for('recipes') ~ recipe.get('id') }}">
-        <h3><small class="text-muted">{{ recipe.get('data').get('title') }} </small></h3>
-      </a>
-      <p>{{ recipe.get('data').get('description') }}</p>
+      <ul class="list-unstyled">
+        <li class="media">
+          <img class="d-flex mr-3" src="{{ url_for('static', filename='images/generic_recipe_image.png') }}"
+            alt="Recipe image" height="64" width="64">
+          <div class="media-body">
+            <a href="{{ url_for('recipes') ~ recipe.get('id') }}">
+              <h5 class="mt-0">{{ recipe.get('data').get('title') }}</h5>
+            </a>
+            {{ recipe.get('data').get('description') }}
+          </div>
+         </li>
+      </ul>
     {% endfor %}
   {% endif %}
+
 {% endblock %}
