@@ -26,6 +26,11 @@ class DataStore:
             'description',
             'fulfilled'
         )
+        self.instruction_attributes = (
+            'recipe_id',
+            'title',
+            'description'
+        )
         self.storage = {}.fromkeys(self.tables)
 
     def create_user(self, **user_data):
@@ -150,6 +155,58 @@ class DataStore:
         for recipe in recipes:
             if recipe.get('id') == recipe_id:
                 self.storage['recipes'].remove(recipe)
+        return None
+
+
+    """ Instructions section """
+    def create_instruction(self, **instruction_data):
+        _id = int(uuid.uuid4())
+        instruction = {}
+
+        for key, value in instruction_data.items():
+            if key not in self.instruction_attributes:  # Accept only Recipe attributes  # NOQA
+                raise AttributeError('Please supply valid Instruction attributes')  # NOQA
+            instruction[key] = value
+        if self.storage.get('instructions') is None:
+            self.storage['instructions'] = [{'id': _id, 'data': instruction}]
+            return self.storage.get('instructions')
+        self.storage['instructions'].append({'id': _id, 'data': instruction})
+        return self.storage.get('instructions')
+
+    def find_instruction(self, instruction_id):
+        """ DataStore.find_instruction(instruction) -> instruction instance or none """
+        instructions = self.storage.get('instructions')
+        if (instructions is None) or (len(instructions) == 0):
+            return None
+        for instruction in instructions:
+            if instruction.get('id') == instruction_id:
+                return instruction
+            continue
+        return None
+
+    def update_instruction(self, instruction_id, **instruction_data):
+        """ DataStore.update_instruction(): Update Instruction records given
+        the ID of the instruction
+        """
+        instruction = self.find_instruction(instruction_id)
+        if instruction is None:  # Instruction not in data store so no need to proceed
+            raise ValueError()
+        for key, value in instruction.items():
+            if (key in instruction.get('data').keys()) or (key == 'instruction_id'):
+                instruction.get('data')[key] = value
+            else:  # Invalid instruction attributes
+                raise Exception('Invalid Instruction')
+
+    def delete_instruction(self, instruction_id):
+        instruction = self.find_instruction(instruction_id)
+        if instruction is None:  # Instruction not in data store so no need to proceed
+            raise ValueError()
+        instructions = self.storage.get('instructions')
+        if (instructions is None) or (len(instructions) == 0):
+            return None
+        for instruction in instructions:
+            if instruction.get('id') == instruction_id:
+                self.storage['instructions'].remove(instruction)
         return None
 
 
