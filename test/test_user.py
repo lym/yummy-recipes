@@ -17,7 +17,6 @@ def test_user_create():
     """ It should create a new user """
     email = 'lym@lym.com'
     passw = 'lympass'
-    table = user.db.table('users')
     users = ds.storage.get('users')
     if users is None:
         len_before = 0
@@ -57,13 +56,9 @@ def test_delete_user():
     """ It should delete a User instance from the database """
     email = 'lym@lym.com'
     passw = 'lympass'
-    table = user.db.table('users')
-    # User.create(email=email, password=passw)
     ds.create_user(first_name='Harry', last_name='Potter')
 
-    # len_before = len(table.all())
     len_before = ds.storage.get('users').__len__()
-    # rec_id = table.all()[-1].get('id')  # Get last-saved item
     users = ds.storage.get('users')
     record_id = ds.storage.get('users')[0].get('id')
     ds.delete_user(record_id)
