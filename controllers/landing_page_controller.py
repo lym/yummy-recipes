@@ -15,7 +15,11 @@ class LandingPageController(View):
                 'landing_page.html', name='landingpage-template'
             )
         else:
-            recipes =  Recipe.all()
+            recipe_coln =  Recipe.ds.storage.get('recipes')
+            if (recipe_coln is None) or (len(recipe_coln)) == 0:
+                recipes = []
+            else:
+                recipes = recipe_coln
             return render_template(
                 'dashboard.html',
                 name='dashboard',
