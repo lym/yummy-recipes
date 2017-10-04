@@ -20,8 +20,13 @@ class DataStore:
             'email',
             'password'
         )
+        self.recipe_attributes = (
+            'user_id',
+            'title',
+            'description',
+            'fulfilled'
+        )
         self.storage = {}.fromkeys(self.tables)
-        # self.users_table = self.storage[
 
     def create_user(self, **user_data):
         _id = int(uuid.uuid4())
@@ -94,6 +99,58 @@ class DataStore:
             if user.get('data').get('email') == email:
                 return user
             return None
+
+    """ Recipes Section """
+    def create_recipe(self, **recipe_data):
+        _id = int(uuid.uuid4())
+        recipe = {}
+
+        for key, value in recipe_data.items():
+            if key not in self.recipe_attributes:  # Accept only Recipe attributes  # NOQA
+                raise AttributeError('Please supply valid Recipe attributes')
+            recipe[key] = value
+        if self.storage.get('recipes') is None:
+            self.storage['recipes'] = [{'id': _id, 'data': recipe}]
+            return self.storage.get('recipes')
+        self.storage['recipes'].append({'id': _id, 'data': recipe})
+        print(self.storage.get('recipes'))
+        return self.storage.get('recipes')
+
+    def find_recipe(self, recipe_id):
+        """ DataStore.find_recipe(recipe_id) -> recipe instance or none """
+        recipes = self.storage.get('recipes')
+        if (recipes is None) or (len(recipes) == 0):
+            return None
+        for recipe in recipes:
+            if recipe.get('id') == recipe_id:
+                return recipe
+            continue
+        return None
+
+    def update_recipe(self, recipe_id, **recipe_data):
+        """ DataStore.update_recipe(): Update recipe records given the ID of the
+        recipe
+        """
+        recipe = self.find_recipe(recipe_id)
+        if recipe is None:  # Recipe not in data store so no need to proceed
+            raise ValueError()
+        for key, value in recipe_data.items():
+            if (key in recipe.get('data').keys()) or (key == 'recipe_id'):
+                recipe.get('data')[key] = value
+            else:  # Invalid recipe attributes
+                raise Exception('Invalid Recipe')
+
+    def delete_recipe(self, recipe_id):
+        recipe = self.find_recipe(recipe_id)
+        if recipe is None:  # Recipe not in data store so no need to proceed
+            raise ValueError()
+        recipes = self.storage.get('recipes')
+        if (recipes is None) or (len(recipes) == 0):
+            return None
+        for recipe in recipes:
+            if recipe.get('id') == recipe_id:
+                self.storage['recipes'].remove(recipe)
+        return None
 
 
 
