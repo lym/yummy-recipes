@@ -16,6 +16,7 @@ from controllers import (
         UsersController,
         RecipesController,
         InstructionsController,
+        RecipeDeletionController,
 )
 
 app = Flask(__name__)
@@ -102,6 +103,12 @@ app.add_url_rule(
     '/instructions/<int:instruction_id>',
     view_func=instructions_url,
     methods=['GET', 'PUT', 'DELETE']
+)
+
+app.add_url_rule(
+    '/delete_recipe/',
+    view_func=RecipeDeletionController.as_view('delete_recipe'),
+    methods=['GET']
 )
 
 app.secret_key = 'K5A34_zr=sdfjgq29kd'
