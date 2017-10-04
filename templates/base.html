@@ -8,34 +8,60 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/stylesheets/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/stylesheets/ionicons.css') }}">
 </head>
+
 <body>
-  <div class="container-fluid">
-    <header>
-      <ul class="nav justify-content-end">
-        <li><a class="nav-link" href="javascript:void(0)">Settings</a></li>
-        <li><a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a></li>
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a class="navbar-brand" href="/">Yummy Recipes</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('dashboard')}}">Home <span class="sr-only">(current)</span></a>
+        </li>
       </ul>
-    </header>
+      <ul class="navbar-nav">
 
-    <div class="row">
-      <div class="col">
-        <section>
-          <nav class="bg-light sidebar">
-            <ul class="nav nav-pills flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="/new_recipe">New Recipe</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/recipes">All Recipes</a>
-              </li>
-            </ul>
-          </nav>
-        </section>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-person"></i></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" id="pills-dropdown1-tab"
+               href="javascript:void(0)" role="tab" data-toggle="pill"
+               aria-controls="pills-dropdown1">
+              Settings
+            </a>
+            <a class="dropdown-item" id="pills-dropdown2-tab"
+               href="{{ url_for('logout') }}">
+              Sign Out
+            </a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">{{ session['email'] }}</a>
+        </li>
+        </ul>
       </div>
+   </nav>
 
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar ">
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/new_recipe">New Recipe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/recipes">All Recipes</a>
+          </li>
+        </ul>
+      </nav>
       <div class="col">
-        <section class="page_content">
+        <!-- <section class="page_content"> -->
           {% block content %}
           {% endblock %}
 
@@ -43,17 +69,13 @@
             Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
             All rights reserved
           </footer>
-        </section>
-      </div>
-
-      <div class="col">
-        <section class="user-details">
-          <img src="../static/images/lym-160x160.jpg" alt="Current User's Thumbnail">
-          <h5>{{ session['email'] }}</h5>
-        </section>
+        <!-- </section> -->
       </div>
     </div>
 
+  <script src="{{ url_for('static', filename='vendor/javascripts/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/javascripts/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/javascripts/bootstrap.js') }}"></script>
   </div>
 </body>
 </html>

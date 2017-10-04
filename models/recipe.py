@@ -43,3 +43,11 @@ class Recipe(BaseModel):
     def all(cls):
         table = cls.db.table('recipes')
         return table.all()
+
+    @classmethod
+    def fetch(cls, recipe_id):
+        table = Recipe.db.table(Recipe.table_name)
+        results = table.get(where('id') == recipe_id)
+        if len(results) > 0:
+            return results
+        return None
