@@ -88,7 +88,6 @@ def test_update_instruction():
 def test_delete_instruction():
     """ It should delete an instruction from the data store """
     title = 'Instruction for deletion'
-    table = instruction.db.table('instructions')
 
     ds.create_instruction(recipe_id=recipe_id, title=title)
     len_before = ds.storage.get('instructions').__len__()
