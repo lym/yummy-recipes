@@ -27,9 +27,10 @@ class Recipe(BaseModel):
         kwargs['modified'] = datetime.now(cls.tz)
         for key, value in kwargs.items():
             kwargs[key] = value
+        _id = int(uuid.uuid4())
         db_table.insert(
             {
-                'id': int(uuid.uuid4()), 'data': kwargs
+                'id': _id, 'data': kwargs
             }
         )
 
