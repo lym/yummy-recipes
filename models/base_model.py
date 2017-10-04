@@ -1,8 +1,6 @@
 from datetime import datetime
 import pytz
 import uuid
-from tinydb import TinyDB  # , Query
-from tinydb.storages import MemoryStorage
 
 
 class DataStore:
@@ -213,12 +211,9 @@ class DataStore:
 
 class BaseModel:
     """ This class implements all our models' shared features """
-    table_name = None
     tz = pytz.utc
-
-    db = TinyDB(storage=MemoryStorage)
-
     ds = DataStore()
+
     def __init__(self):
         self.id = id(self)  # guaranteed uniqueness through one program session
         self.created = datetime.now(self.tz)
