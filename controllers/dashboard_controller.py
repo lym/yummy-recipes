@@ -5,7 +5,7 @@ from models import Recipe
 
 class DashboardController(View):
     def dispatch_request(self):
-        recipes =  Recipe.all()
+        recipes =  Recipe.ds.storage.get('recipes')
         return render_template(
             'dashboard.html',
             name='dashboard',

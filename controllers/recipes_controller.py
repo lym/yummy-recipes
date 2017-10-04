@@ -8,8 +8,6 @@ from flask import (
 from flask.views import MethodView
 from flask_api import status
 
-from tinydb import where
-
 from models import (
     User,
     Recipe,
@@ -23,11 +21,10 @@ class RecipesController(MethodView):
         if not BaseController.logged_in():  # send guests to landing page
             return redirect(url_for('landing_page'))
         if recipe_id is None:  # No specific id so return all
-            recipes = Recipe.all()
+            recipes = Recipe.ds.storage.get('recipes')
             return render_template('recipes/index.html', recipes=recipes)
         else:  # Dealing with a particular recipe
-            table = Recipe.db.table('recipes')
-            recipe = table.get(where('id') == recipe_id)
+            recipe = Recipe.ds.find_recipe(recipe_id)
             if recipe is None:  # Invalid recipe_id requested
                 abort(404)
             else:
@@ -47,7 +44,11 @@ class RecipesController(MethodView):
             or title == ''):
             abort(status.HTTP_400_BAD_REQUEST)
 
-        Recipe.create(user_id=user_id, title=title, description=description)
+        Recipe.ds.create_recipe(
+            user_id=user_id,
+            title=title,
+            description=description
+        )
         print(request.form)
         res = status.HTTP_201_CREATED
         return redirect(url_for('dashboard'))
