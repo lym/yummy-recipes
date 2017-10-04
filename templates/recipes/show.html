@@ -4,6 +4,16 @@
   <h3>{{ recipe.get('data').get('title')|title }}</h3>
   <p>{{ recipe.get('data').get('description')|capitalize }}</p>
   <a href="{{ '/new_instruction' ~ '?recipe=' ~ recipe.get('id') }}">
-    Add Instructions
+    <small>Add Instructions</small>
+  </a> | 
+
+  <a href="#">
+    <small><i class="icon ion-edit"></i></small>
+  </a> | 
+
+  <a href="#">
+    <small><i class="icon ion-android-delete"></i></small>
   </a>
 {% endblock %}
+
+ion-android-delete
