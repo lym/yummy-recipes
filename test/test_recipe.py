@@ -1,16 +1,12 @@
-from tinydb import where
-
 from models import (
     User,
-    Recipe
+    Recipe,
+    DataStore,
 )
 
 recipe = Recipe(883248, 'New Recipe')
 user = User('email@anonmail.com', 'weakpass')
-
-
-def test_default_attributes():
-    assert recipe.table_name is not None
+ds = DataStore()
 
 
 def test_recipe_create():
@@ -18,81 +14,86 @@ def test_recipe_create():
     user_id = 12345
     title = 'Another one'
     description = 'Description for another one'
-    table = recipe.db.table('recipes')
-    len_before = len(table.all())
 
-    Recipe.create(user_id=user_id, title=title, description=description)
-    len_after = len(table.all())
-    assert len(recipe.db.table(recipe.table_name).all()) != 0
+    recipes = ds.storage.get('recipes')
+    if recipes is None:
+        len_before = 0
+    else:
+        len_before = len(recipes)
+
+    ds.create_recipe(user_id=user_id, title=title, description=description)
+    len_after = ds.storage.get('recipes').__len__()
+    assert len_after != 0
     assert len_before != len_after
 
-    Recipe.db.purge_tables()  # Clean up data store
+    ds.storage.clear()  # Clean up data store
 
 
-def test_presence_of_table_name_attribute():
-    """ Models should have table names """
-    assert recipe.table_name is not None
+def test_retrieve_recipe():
+    ds.create_recipe(
+        user_id='123',
+        title='New Recipe',
+        description='A desc for the new recipe'
+    )
+
+    ds.create_recipe(
+        user_id='123',
+        title='Another Recipe',
+        description='A desc for the another recipe'
+    )
+
+    # Retrieve random recipe from the database
+    recipe_id = ds.storage.get('recipes')[0].get('id')
+    assert recipe_id is not None
+    searched_recipe = ds.find_recipe(recipe_id)
+    assert searched_recipe is not None
+
+    ds.storage.clear()  # Clean up data store
+
+
+def test_update_recipe():
+    ds.create_recipe(
+        user_id=123,
+        title='New Recipe',
+        description='A desc for the new recipe'
+    )
+
+    ds.create_recipe(
+        user_id=123,
+        title='Another Recipe',
+        description='A desc for the another recipe'
+    )
+
+    recipe_id = ds.storage.get('recipes')[0].get('id')
+    assert recipe_id is not None
+
+    ds.update_recipe(
+        recipe_id,
+        user_id=324,
+        title='New Recipe',
+        description='A desc for t'
+    )
+    updated_recipe = ds.find_recipe(recipe_id)
+    assert updated_recipe.get('data').get('description') == 'A desc for t'
+    assert updated_recipe.get('data').get('user_id') == 324
 
 
 def test_delete_recipe():
     """ It should delete a recipe instance from the recipes table """
     user_id = 12345
     title = 'Item for deletion'
-    table = recipe.db.table(recipe.table_name)
-    Recipe.create(
+
+    ds.create_recipe(
         user_id=user_id,
         title=title,
         description='This item is meant to test the delete functionality'
     )
-    len_before = len(table.all())
-    assert len_before != 0
-
-    rec_id = table.all()[-1].get('id')
-    Recipe.delete(rec_id)
-    len_after = len(table.all())
-    found = table.get(where('id') == rec_id)
+    len_before = ds.storage.get('recipes').__len__()
+    recipes = ds.storage.get('recipes')
+    recipe_id = ds.storage.get('recipes')[0].get('id')
+    ds.delete_recipe(recipe_id)
+    len_after = ds.storage.get('recipes').__len__()
+    found = ds.find_recipe(recipe_id)
     assert found is None
     assert len_before != len_after
-
-    Recipe.db.purge_tables()  # Clean up data store
-
-def test_recipes_fetch():
-    """ It should return recipes given a recipe id """
-    user_id = 12345  # owner of recipes
-    title_1 = 'First Recipe'
-    title_2 = 'Second Recipe'
-    title_3 = 'Third Recipe'
-    description_1 = 'This is a description for First Recipe'
-    description_2 = 'This is a description for Second Recipe'
-    description_3 = 'This is a description for Third Recipe'
-
-    Recipe.create(
-        user_id=user_id,
-        title=title_1,
-        description=description_1
-    )
-
-    Recipe.create(
-        user_id=user_id,
-        title=title_2,
-        description=description_2
-    )
-
-    Recipe.create(
-        user_id=user_id,
-        title=title_3,
-        description=description_3
-    )
-
-    recipes = Recipe.all()
-    recipe_ids = []
-    for recipe in recipes:
-        recipe_ids.append(recipe.get('id'))
-    print('Number or recipes: {}'.format(len(recipe_ids)))
-    print('The three test recipes: {}'.format(recipe_ids))
-    recipe_id = recipe_ids.pop()
-    fetched_recipe = Recipe.fetch(recipe_id)
-    print('Fetched Recipe: {}'.format(fetched_recipe))
-    assert fetched_recipe is not None
-    # assert Recipe.fetch(recipe_id)
-    Recipe.db.purge_tables()  # Clean up data store
+    assert len_before != 0
