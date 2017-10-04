@@ -1,17 +1,16 @@
-from tinydb import where
-
 from models import (
-    User
+    User,
+    DataStore,
 )
 
 user = User('email@anonmail.com', 'weakpass')
+ds = DataStore()
 
 
 def test_default_attributes():
     assert user.id is not None
     assert user.created is not None
     assert user.modified is not None
-    assert user.table_name is not None
 
 
 def test_user_create():
@@ -19,25 +18,57 @@ def test_user_create():
     email = 'lym@lym.com'
     passw = 'lympass'
     table = user.db.table('users')
-    len_before = len(table.all())
+    users = ds.storage.get('users')
+    if users is None:
+        len_before = 0
+    else:
+        len_before = len(users)
 
-    User.create(email=email, password=passw)
-    len_after = len(table.all())
-    assert len(user.db.table(user.table_name).all()) != 0
+    ds.create_user(first_name='Tom', last_name='Riddle', email=email,
+                   password=passw)
+
+    len_after = ds.storage.get('users').__len__()
+    assert len_after != 0
     assert len_before != len_after
 
+
+def test_retrieve_user():
+    ds.create_user(first_name='Harry', last_name='Potter')
+    ds.create_user(first_name='Tom', last_name='Riddle')
+
+    # Retrieve random user from database
+    record_id = ds.storage.get('users')[0].get('id')
+    assert record_id is not None
+    searched_item = ds.find_user(record_id)
+    assert searched_item is not None
+
+
+def test_update_user():
+    ds.create_user(first_name='Harry', last_name='Potter')
+    ds.create_user(first_name='Tom', last_name='Riddle')
+
+    record_id = ds.storage.get('users')[0].get('id')
+    assert record_id is not None
+    ds.update_user(user_id=record_id, first_name='Lord', last_name='Voldermort')
+    updated_user = ds.find_user(record_id)
+    assert updated_user.get('data').get('first_name') == 'Lord'
 
 def test_delete_user():
     """ It should delete a User instance from the database """
     email = 'lym@lym.com'
     passw = 'lympass'
     table = user.db.table('users')
-    User.create(email=email, password=passw)
+    # User.create(email=email, password=passw)
+    ds.create_user(first_name='Harry', last_name='Potter')
 
-    len_before = len(table.all())
-    rec_id = table.all()[-1].get('id')  # Get last-saved item
-    User.delete(rec_id)
-    len_after = len(table.all())
-    found = table.get(where('id') == rec_id)
+    # len_before = len(table.all())
+    len_before = ds.storage.get('users').__len__()
+    # rec_id = table.all()[-1].get('id')  # Get last-saved item
+    users = ds.storage.get('users')
+    record_id = ds.storage.get('users')[0].get('id')
+    ds.delete_user(record_id)
+
+    len_after = ds.storage.get('users').__len__()
+    found = ds.find_user(record_id)
     assert found is None
     assert len_before != len_after

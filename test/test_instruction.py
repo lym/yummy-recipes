@@ -38,7 +38,6 @@ def test_presence_of_table_names():
     """ Models should have table names """
 
     assert instruction.table_name is not None
-    assert user.table_name is not None
     assert instruction.table_name is not None
 
 

@@ -8,7 +8,10 @@ from flask import (
 from flask.views import MethodView
 from flask_api import status
 
-from models import User
+from models import (
+    User,
+    DataStore,
+)
 
 
 class UsersController(MethodView):
@@ -25,11 +28,11 @@ class UsersController(MethodView):
             abort(status.HTTP_400_BAD_REQUEST)
 
         # Check if user already exists
-        if User.valid_user(email, password):
+        if User.ds.valid_user(email, password):
             print('User already exists!')
             abort(status.HTTP_400_BAD_REQUEST)
 
-        User.create(
+        User.ds.create_user(
             email=email, password=password, first_name=first_name,
             last_name=last_name
         )
