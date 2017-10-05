@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %} Yummy Recipes | Dashboard {% endblock %}
+{% block content %}
+  <h1 class="h3">{{ recipe.get('data').get('title') ~ ' | ' ~ 'Edit' }}</h1>
+  <form action="/recipes/" method="post">
+    <div class="form-group has-feedback">
+      <input type="text" class="form-control" name="title"
+             value="{{ recipe.get('data').get('title') }}">
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      <input type="description" class="form-control" name="description"
+             value="{{ recipe.get('data').get('description') }}">
+      <span class="glyphicon glyphicon-envelope form-control-feedback">
+      </span>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
+        <div class="checkbox icheck">
+          <label>
+            <input type="checkbox" name="fulfilled"> Prepared this recipe before?
+          </label>
+        </div>
+      </div>
+      <!-- /.col -->
+
+      <input type="hidden" class="form-control" id="user_id" name='user_id'
+             value="{{ user.get('id') }}">
+
+      <input type="hidden" class="form-control" id="recipe_id" name='recipe_id'
+             value="{{ recipe.get('id') }}">
+
+      <div class="col-xs-4">
+        <button type="submit" class="btn btn-primary">
+          Create Recipe
+        </button>
+      </div> <!-- /.col -->
+    </div>
+  </form>
+{% endblock %}
