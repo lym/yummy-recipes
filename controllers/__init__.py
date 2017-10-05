@@ -6,6 +6,7 @@ from .instructions_controller import InstructionsController
 from .landing_page_controller import LandingPageController
 from .dashboard_controller import DashboardController
 from .recipe_deletion_controller import RecipeDeletionController
+from .recipe_update_controller import RecipeUpdateController
 
 __all__ = [
     'BaseController',
@@ -16,4 +17,5 @@ __all__ = [
     'InstructionsController',
     'LandingPageController',
     'RecipeDeletionController',
+    'RecipeUpdateController',
 ]
