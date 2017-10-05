@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,20 +7,38 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/stylesheets/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
 </head>
 <body>
-  <div class="container-fluid">
-    <header>
-        <ul class="nav justify-content-end">
-          <li><a class="nav-link" href="javascript:void(0)">About</a></li>
-          <li><a class="nav-link" href="javascript:void(0)">Sign Up</a></li>
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a class="navbar-brand" href="/">Yummy Recipes</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-person"></i></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" id="pills-dropdown2-tab"
+               href="{{ url_for('register') }}">
+              Sign Up
+            </a>
+          </div>
+        </li>
         </ul>
-    </header>
+      </div>
+  </nav>
 
-    <h1><a href="/">Yummy Recipes | Login</a></h1>
-
+  <div class="container-fluid">
     <div class="row">
       <div class="col">
+      </div>
+
+      <div class="col">
+        <h1 class="h3">Yummy Recipes | Login</h1>
         <form action="/returning/" method="post">
           <div class="form-group has-feedback">
             <input type="email" class="form-control" name="email"
@@ -40,24 +58,28 @@
             </div> <!-- /.col -->
           </div>
         </form>
-        <a href="{{ url_for('register') }}">Register New Account</a><br>
+        <hr>
+        <a href="{{ url_for('register') }}">
+          <span class="text-center">Register New Account</span>
+        </a>
       </div>
 
       <div class="col">
-        <section class="tags">
-        </section>
-      </div>
-
-      <div class="col">
-        <section class="user-details">
-        </section>
       </div>
     </div>
 
-    <footer>
-      Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
-      All rights reserved
-    </footer>
+    <div class="row">
+      <div class="col">
+        <footer class="footer">
+          Copyright &copy; 2017 <b>Yummy Recipes Inc.</b><br>
+          All rights reserved
+        </footer>
+      </div>
+    </div>
   </div>
+
+  <script src="{{ url_for('static', filename='vendor/javascripts/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/javascripts/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/javascripts/bootstrap.js') }}"></script>
 </body>
 </html>

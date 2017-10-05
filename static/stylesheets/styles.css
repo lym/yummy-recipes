@@ -2,6 +2,14 @@ body {
   padding-top: 3.5rem;
 }
 
+h1, .jumbo-header {
+  text-align: center;
+}
+
+p, .lead {
+  text-align: center;
+}
+
 /* User details section */
 .user-details {
   padding-left: 25px;
@@ -52,4 +60,5 @@ body {
   color: #444;
   border-top: 1px solid #d2d6de;
   font-size: x-small;
+  text-align: center;
 }
