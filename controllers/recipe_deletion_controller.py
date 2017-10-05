@@ -21,5 +21,5 @@ class RecipeDeletionController(MethodView):
         recipe_id = request.args.get('recipe_id')
         if recipe_id is None:
             abort(400)
-        Recipe.delete(recipe_id)
+        Recipe.ds.delete_recipe(recipe_id)
         return redirect(url_for('recipes'))
