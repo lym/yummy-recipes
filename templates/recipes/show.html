@@ -7,7 +7,7 @@
     <small>Add Instructions</small>
   </a> | 
 
-  <a href="#">
+  <a href="{{ url_for('edit_recipe') ~ '?recipe=' ~ recipe.get('id') }}">
     <small><i class="icon ion-edit"></i></small>
   </a> | 
 
