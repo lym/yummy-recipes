@@ -144,9 +144,9 @@ class DataStore:
                 raise Exception('Invalid Recipe')
 
     def delete_recipe(self, recipe_id):
-        recipe = self.find_recipe(recipe_id)
+        recipe = self.find_recipe(int(recipe_id))
         if recipe is None:  # Recipe not in data store so no need to proceed
-            raise ValueError()
+            raise Exception('Invalid Recipe ID')
         recipes = self.storage.get('recipes')
         if (recipes is None) or (len(recipes) == 0):
             return None
