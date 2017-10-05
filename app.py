@@ -17,6 +17,7 @@ from controllers import (
         RecipesController,
         InstructionsController,
         RecipeDeletionController,
+        RecipeUpdateController,
 )
 
 app = Flask(__name__)
@@ -43,6 +44,18 @@ def new_recipe():
         'recipes/new.html',
         name="new_recipe",
         user=session.get('user')
+    )
+
+@app.route("/edit_recipe")
+def edit_recipe():
+    recipe_id = int(request.args.get('recipe'))
+    recipe = Recipe.ds.find_recipe(recipe_id)
+
+    return render_template(
+        'recipes/edit.html',
+        name="new_recipe",
+        user=session.get('user'),
+        recipe=recipe
     )
 
 @app.route("/new_instruction")
@@ -106,9 +119,15 @@ app.add_url_rule(
 )
 
 app.add_url_rule(
-    '/delete_recipe/',
+    '/delete_recipe',
     view_func=RecipeDeletionController.as_view('delete_recipe'),
     methods=['GET']
+)
+
+app.add_url_rule(
+    '/update_recipe',
+    view_func=RecipeUpdateController.as_view('update_recipe'),
+    methods=['POST']
 )
 
 app.secret_key = 'K5A34_zr=sdfjgq29kd'
