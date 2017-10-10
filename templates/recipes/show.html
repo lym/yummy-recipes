@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block title %} Yummy Recipes | recipe.get('title') {% endblock %}
 {% block content %}
-  <h3>{{ recipe.get('data').get('title')|title }}</h3>
-  <p>{{ recipe.get('data').get('description')|capitalize }}</p>
-  <a href="{{ '/new_instruction' ~ '?recipe=' ~ recipe.get('id') }}">
-    <small>Add Instructions</small>
-  </a> | 
+  <div class="media">
+    <img class="d-flex mr-3" src="{{ url_for('static', filename='images/generic_recipe_image.png') }}"
+      alt="Recipe image" height="64" width="64">
+    <div class="media-body">
+      <h3 class="mt-0">{{ recipe.get('data').get('title')|title }}</h3>
+      {{ recipe.get('data').get('description')|capitalize }}
+      <br>
+      <a href="{{ '/new_instruction' ~ '?recipe=' ~ recipe.get('id') }}">
+        <small>Add Instructions</small>
+      </a> |
 
-  <a href="{{ url_for('edit_recipe') ~ '?recipe=' ~ recipe.get('id') }}">
-    <small><i class="icon ion-edit"></i></small>
-  </a> | 
+      <a href="{{ url_for('edit_recipe') ~ '?recipe=' ~ recipe.get('id') }}">
+        <small><i class="icon ion-edit"></i></small>
+      </a> |
 
-  <a href="{{ url_for('delete_recipe') ~ '?recipe_id=' ~ recipe.get('id') }}">
-    <small><i class="icon ion-android-delete"></i></small>
-  </a>
+      <a href="{{ url_for('delete_recipe') ~ '?recipe_id=' ~ recipe.get('id') }}">
+        <small><i class="icon ion-android-delete"></i></small>
+      </a>
+    </div>
+  </div>
 {% endblock %}
-
-ion-android-delete
