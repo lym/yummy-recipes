@@ -14,19 +14,10 @@
       </span>
     </div>
     <div class="row">
-      <div class="col-xs-8">
-        <div class="checkbox icheck">
-          <label>
-            <input type="checkbox" name="fulfilled"> Prepared this recipe before?
-          </label>
-        </div>
-      </div>
-      <!-- /.col -->
+      <div class="col">
+        <input type="hidden" class="form-control" id="user_id" name='user_id'
+               value="{{ user.get('id') }}">
 
-      <input type="hidden" class="form-control" id="user_id" name='user_id'
-             value="{{ user.get('id') }}">
-
-      <div class="col-xs-4">
         <button type="submit" class="btn btn-primary">
           Create Recipe
         </button>
