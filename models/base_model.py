@@ -43,7 +43,6 @@ class DataStore:
             self.storage['users'] = [{'id': _id, 'data': user}]
             return self.storage.get('users')
         self.storage['users'].append({'id': _id, 'data': user})
-        print(self.storage.get('users'))
         return self.storage.get('users')
 
     def find_user(self, user_id):
@@ -116,7 +115,6 @@ class DataStore:
             self.storage['recipes'] = [{'id': _id, 'data': recipe}]
             return self.storage.get('recipes')
         self.storage['recipes'].append({'id': _id, 'data': recipe})
-        print(self.storage.get('recipes'))
         return self.storage.get('recipes')
 
     def find_recipe(self, recipe_id):
