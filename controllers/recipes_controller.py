@@ -21,7 +21,11 @@ class RecipesController(MethodView):
         if not BaseController.logged_in():  # send guests to landing page
             return redirect(url_for('landing_page'))
         if recipe_id is None:  # No specific id so return all
-            recipes = Recipe.ds.storage.get('recipes')
+            recipe_coln =  Recipe.ds.storage.get('recipes')
+            if (recipe_coln is None) or (len(recipe_coln)) == 0:
+                recipes = []
+            else:
+                recipes = recipe_coln
             return render_template('recipes/index.html', recipes=recipes)
         else:  # Dealing with a particular recipe
             recipe = Recipe.ds.find_recipe(recipe_id)
