@@ -149,7 +149,7 @@ class DataStore:
         if (recipes is None) or (len(recipes) == 0):
             return None
         for recipe in recipes:
-            if recipe.get('id') == recipe_id:
+            if int(recipe.get('id')) == int(recipe_id):
                 self.storage['recipes'].remove(recipe)
         return None
 
