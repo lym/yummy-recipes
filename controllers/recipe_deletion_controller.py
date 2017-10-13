@@ -14,8 +14,8 @@ from models import (
 
 
 class RecipeDeletionController(MethodView):
-    def get(self):
-        recipe_id = request.args.get('recipe_id')
+    def post(self):
+        recipe_id = request.form.get('recipe_id')
         if recipe_id is None:
             abort(400)
         Recipe.ds.delete_recipe(recipe_id)

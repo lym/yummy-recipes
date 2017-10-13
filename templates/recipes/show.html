@@ -14,11 +14,17 @@
 
       <a href="{{ url_for('edit_recipe') ~ '?recipe=' ~ recipe.get('id') }}">
         <small><i class="icon ion-edit"></i></small>
-      </a> |
-
-      <a href="{{ url_for('delete_recipe') ~ '?recipe_id=' ~ recipe.get('id') }}">
-        <small><i class="icon ion-android-delete"></i></small>
       </a>
+
+      <br>
+      <form action="/delete_recipe" id="rcp-id" method="post">
+        <input type="hidden" id="recipe_id" name="recipe_id"
+               value="{{ recipe.get('id') }}">
+        <button type="submit" class="btn btn-danger btn-sm" id="rcp-del">
+          <small><i class="icon ion-android-delete"></i></small>
+          Delete Recipe
+        </button>
+      </form>
     </div>
   </div>
 {% endblock %}

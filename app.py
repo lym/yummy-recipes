@@ -121,7 +121,7 @@ app.add_url_rule(
 app.add_url_rule(
     '/delete_recipe',
     view_func=RecipeDeletionController.as_view('delete_recipe'),
-    methods=['GET']
+    methods=['POST']
 )
 
 app.add_url_rule(
