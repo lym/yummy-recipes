@@ -65,6 +65,7 @@ def test_update_recipe():
     recipe_id = Recipe.ds.storage.get('recipes')[0].get('id')
     assert recipe_id is not None
 
+    len_before  = Recipe.ds.storage.get('recipes').__len__()
     Recipe.ds.update_recipe(
         recipe_id,
         user_id=324,
@@ -72,6 +73,8 @@ def test_update_recipe():
         description='A desc for t'
     )
     updated_recipe = Recipe.ds.find_recipe(recipe_id)
+    len_after   = Recipe.ds.storage.get('recipes').__len__()
+    assert len_after == len_before  # Ensure we're not creating a duplicate
     assert updated_recipe.get('data').get('description') == 'A desc for t'
     assert updated_recipe.get('data').get('user_id') == 324
 
