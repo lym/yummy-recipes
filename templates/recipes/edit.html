@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %} Yummy Recipes | Dashboard {% endblock %}
+{% block title %} Yummy Recipes | Edit {% endblock %}
 {% block content %}
   <h1 class="h3">{{ recipe.get('data').get('title') ~ ' | ' ~ 'Edit' }}</h1>
-  <form action="/recipes/" method="post">
+  <form action="{{ url_for('update_recipe')}}" method="post">
     <div class="form-group has-feedback">
       <input type="text" class="form-control" name="title"
              value="{{ recipe.get('data').get('title') }}">
@@ -32,7 +32,7 @@
 
       <div class="col-xs-4">
         <button type="submit" class="btn btn-primary">
-          Create Recipe
+         Save
         </button>
       </div> <!-- /.col -->
     </div>
