@@ -29,7 +29,7 @@ class RecipeUpdateController(MethodView):
         if recipe_id is None:
             abort(400)
         Recipe.ds.update_recipe(
-            recipe_id,
+            int(recipe_id),
             user_id=user_id,
             title=title,
             description=description
