@@ -8,6 +8,23 @@
       <h3 class="mt-0">{{ recipe.get('data').get('title')|title }}</h3>
       {{ recipe.get('data').get('description')|capitalize }}
       <br>
+      <hr>
+      {% if recipe_instructions|length is not equalto 0 %}
+        {% for instruction in recipe_instructions %}
+          <ul>
+            <li>
+              <!--
+              <img class="d-flex mr-3" src="{{ url_for('static', filename='images/generic_recipe_image.png') }}"
+                alt="Recipe image" height="64" width="64">
+               -->
+                <dt>{{ instruction.get('data').get('title') }}:</dt>
+                <dd>
+                  <small>{{ instruction.get('data').get('description') }}</small>
+                </dd>
+             </li>
+          </ul>
+        {% endfor %}
+      {% endif %}
       <a href="{{ '/new_instruction' ~ '?recipe=' ~ recipe.get('id') }}">
         <small>Add Instructions</small>
       </a> |
