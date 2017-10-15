@@ -11,6 +11,7 @@ from flask_api import status
 from models import (
     User,
     Recipe,
+    Instruction,
 )
 
 from controllers import BaseController
@@ -29,12 +30,15 @@ class RecipesController(MethodView):
             return render_template('recipes/index.html', recipes=recipes)
         else:  # Dealing with a particular recipe
             recipe = Recipe.ds.find_recipe(recipe_id)
+            recipe_instructions = Instruction.ds.recipe_instructions(recipe_id)
+
             if recipe is None:  # Invalid recipe_id requested
                 abort(404)
             else:
                 return render_template(
                     'recipes/show.html',
                     recipe=recipe,
+                    recipe_instructions=recipe_instructions
                     )
 
     def post(self):
