@@ -99,3 +99,39 @@ def test_delete_instruction():
     assert found is None
     assert len_before != len_after
     assert len_before != 0
+
+
+def test_recipe_instructions():
+    """ It should return the instructions attached to a particular recipe """
+    recipe_id   = 234234234234
+    title       = 'Another one'
+    description = 'Description for another one'
+
+    recipe_id2   = 345345345345
+    title2       = 'Add three spoonfuls of sugar'
+    description2 = 'This gives the meal a sweet taste'
+
+    recipe_id3   = 234234234234
+    title3       = 'Sprinkle a little cayenne spice'
+    description3 = 'This gives the meal some punch'
+
+    Instruction.ds.create_instruction(
+        recipe_id=recipe_id,
+        title=title,
+        description=description
+    )
+    Instruction.ds.create_instruction(
+        recipe_id=recipe_id2,
+        title=title2,
+        description=description2
+    )
+    Instruction.ds.create_instruction(
+        recipe_id=recipe_id3,
+        title=title3,
+        description=description3
+    )
+    instructions = Instruction.ds.recipe_instructions(recipe_id)
+    assert instructions is not None
+    assert instructions.__len__() == 2
+    for instruction in instructions:
+        assert instruction.get('data').get('recipe_id') == recipe_id

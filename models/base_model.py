@@ -206,6 +206,18 @@ class DataStore:
         return None
 
 
+    def recipe_instructions(self, recipe_id):
+        results = []
+        instructions = self.storage.get('instructions')
+        if instructions is None:
+            return results
+        for instruction in instructions:
+            if instruction.get('data').get('recipe_id') == int(recipe_id):
+                results.append(instruction)
+            continue
+        return results
+
+
 
 class BaseModel:
     """ This class implements all our models' shared features """
