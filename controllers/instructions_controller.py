@@ -8,8 +8,6 @@ from flask import (
 from flask.views import MethodView
 from flask_api import status
 
-from tinydb import where
-
 from models import (
     Recipe,
     Instruction,
@@ -19,22 +17,11 @@ from models import (
 class InstructionsController(MethodView):
     """ Controller for the instruction resource """
     def get(self, instruction_id):
-        if instruction_id is None:
-            instructions = Instruction.all()
-            print('No instruction Id is being supplied')
-            return 'We have content'
-        else:
-            table = Instruction.db.table('instructions')
-            instruction = table.get(where('id') == instruction_id)
-            if instruction is None:
-                abort(404)
-            else:
-                print(instruction)
-                return render_template('instructions/show.html', instruction=instruction)
+        pass
 
     def post(self):
-        user_id = request.form.get('user_id')
-        recipe_id = request.form.get('recipe_id')
+        user_id = int(request.form.get('user_id'))
+        recipe_id = int(request.form.get('recipe_id'))
         title = request.form.get('title')
         description = request.form.get('description')
 
@@ -45,7 +32,9 @@ class InstructionsController(MethodView):
             title == ''):
             abort(status.HTTP_400_BAD_REQUEST)
 
-        Instruction.create(recipe_id=recipe_id, title=title, description=description)
-        print(request.form)
-        res = status.HTTP_201_CREATED
+        Instruction.ds.create_instruction(
+            recipe_id=recipe_id,
+            title=title,
+            description=description
+        )
         return redirect('/recipes/{}'.format(recipe_id))
