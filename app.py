@@ -18,6 +18,7 @@ from controllers import (
         InstructionsController,
         RecipeDeletionController,
         RecipeUpdateController,
+        NewRecipeController,
 )
 
 app = Flask(__name__)
@@ -37,14 +38,6 @@ def logout():
     if session.get('email'):
         session.pop('email', None)
     return redirect(url_for('landing_page'))
-
-@app.route("/new_recipe")
-def new_recipe():
-    return render_template(
-        'recipes/new.html',
-        name="new_recipe",
-        user=session.get('user')
-    )
 
 @app.route("/edit_recipe")
 def edit_recipe():
@@ -68,6 +61,10 @@ def new_instruction():
     )
 
 app.add_url_rule('/', view_func=LandingPageController.as_view('landing_page'))
+
+app.add_url_rule(
+    '/new_recipe', view_func=NewRecipeController.as_view('new_recipe')
+)
 
 app.add_url_rule(
     '/dashboard',
