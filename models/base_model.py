@@ -87,17 +87,17 @@ class DataStore:
         users = self.storage.get('users')
         if users is None:
             return
-        for user in self.storage.get('users'):
+        for user in users:
             if ((user.get('data').get('email') == email) and
                     (user.get('data').get('password') == passw)):
                 return True
-            break
         return False
 
 
     def find_user_by_email(self, email):
         """ Lookup users by email """
-        for user in self.storage.get('users'):
+        users = self.storage.get('users')
+        for user in users:
             if user.get('data').get('email') == email:
                 return user
             return None
